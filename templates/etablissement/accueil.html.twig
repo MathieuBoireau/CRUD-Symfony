@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titre }}{% endblock  %}
+
+{% block body %}
+	<h1> Accueil </h1><br/>
+    <a href='http://localhost:8000/etablissements/all?page=1'>Tous les établissements</a><br/>
+	<a href='http://localhost:8000/etablissements/id/1'>Recherche d'établissements par id</a><br/>
+	<a href='http://localhost:8000/etablissements/departement?page=1'>Recherche d'établissements par département</a><br/>
+	<a href='http://localhost:8000/etablissements/academie?page=1'>Recherche d'établissements par académie</a><br/>
+	<a href='http://localhost:8000/etablissements/commune?page=1'>Recherche d'établissements par commune</a><br/>
+	<a href='http://localhost:8000/etablissements/region?page=1'>Recherche d'établissements par région</a><br/>
+	<a href='http://localhost:8000/etablissements/new'>Insertion d'un nouvel établissement</a><br/>
+	<a href='http://localhost:8000/etablissements/update/1'>Modification d'un établissement existant</a><br/>
+	<a href='http://localhost:8000/etablissements/cartographieCommune'>Cartographie des établissements par commune</a><br/>
+{% endblock %}

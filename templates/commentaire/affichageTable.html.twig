@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titre }}{% endblock  %}
+
+{% block javascripts %}
+<script>
+    function initEvents() {
+        let commentaires = document.getElementsByClassName('commentaires');
+        for(let i=0; i<commentaires.length; i++){
+            commentaires[i].addEventListener('click', function(){
+                window.location.href = "http://localhost:8000/commentaires/update/"+this.id;
+            }, false);
+        }
+    }
+
+    window.addEventListener('load', initEvents, false);
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    table {
+        border-collapse:collapse;
+    }
+
+    th,td{
+        border: 1px solid black;
+    }
+
+    td{
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <a href='http://localhost:8000/etablissements'>Retour à l'accueil</a><br/><br/>
+    {% if lienPremier %}
+    <a href='{{ lienPremier }}'>Première page</a>
+    {% endif %}
+    
+    {% if lienPrecedent %}
+    <a href='{{ lienPrecedent }}'>Page précédente</a>
+    {% endif %}
+    
+    {% if lienSuivant %}
+    <a href='{{ lienSuivant }}'>Page suivante</a>
+    {% endif %}
+    <h1 align='center'>{{ nom_etab }}</h1>
+    
+    <a href='http://localhost:8000/commentaires/new/{{ id_etab }}'>Ajouter un commentaire</a>
+    
+    <table>
+        <tr>
+            <th>Nom auteur</th>
+            <th>Note</th>
+            <th>Texte</th>
+            <th>Date</th>
+        </tr>
+    {% for commentaire in commentaires %}
+        <tr class='commentaires' id='{{ commentaire.id }}'>
+            <td>{{ commentaire.nomauteur }}</td>
+            <td>{{ commentaire.note }}</td>
+            <td>{{ commentaire.texte }}</td>
+            <td>{{ commentaire.date|date('d-m-Y') }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}

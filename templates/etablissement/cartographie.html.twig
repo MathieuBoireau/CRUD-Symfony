@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titre }}{% endblock  %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+		crossorigin=""/>
+{% endblock %}
+{% block javascripts %}
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin="">
+	</script>
+{% endblock %}
+
+{% block body %}
+	<a href='http://localhost:8000/etablissements'>Retour à l'accueil</a><br/>
+	<h1>{{ etablissements[0].commune }}</h1>
+	<div id="map" style="height: 800px;"></div>
+	<script>
+		const draw_map = (data) => {  
+			const map = L.map('map')
+				.fitBounds(data.map((d) => [d.lat,d.lon]))
+				.addLayer(L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+				}));
+			data.forEach((etablissement) => {
+				L.marker([etablissement.lat, etablissement.lon]).addTo(map).bindPopup("<b>"+etablissement.nom+"</b>");
+			});
+		};
+
+		const data = [
+		{% for etablissement in etablissements %}
+		{
+			nom:'{{ etablissement.nom }}',
+			lat:'{{ etablissement.latitude }}',
+			lon:'{{ etablissement.longitude }}'
+		},
+		{% endfor %}
+		];
+
+		draw_map(data);
+	</script>
+{% endblock %}

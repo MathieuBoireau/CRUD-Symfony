@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titre }}{% endblock %}
+
+{% block javascripts %}
+<script>
+    function initEvents() {
+        let etablissements = document.getElementsByClassName('etablissements');
+        for(let i=0; i<etablissements.length; i++){
+            etablissements[i].addEventListener('click', function(){
+                window.location.href = "http://localhost:8000/commentaires/"+this.id+'?page=1';
+            }, false);
+        }
+    }
+
+    window.addEventListener('load', initEvents, false);
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    table {
+        border-collapse:collapse;
+    }
+
+    th,td{
+        border: 1px solid black;
+    }
+
+    td{
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <a href='http://localhost:8000/etablissements'>Retour à l'accueil</a><br/><br/>
+    {% if lienPremier %}
+    <a href='{{ lienPremier }}'>Première page</a>
+    {% endif %}
+
+    {% if lienPrecedent %}
+    <a href='{{ lienPrecedent }}'>Page précédente</a>
+    {% endif %}
+    
+    {% if lienSuivant %}
+    <a href='{{ lienSuivant }}'>Page suivante</a>
+    {% endif %}
+    <br/><br/>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Nature</th>
+            <th>Secteur</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Adresse</th>
+            <th>Commune</th>
+            <th>Département</th>
+            <th>Région</th>
+            <th>Académie</th>
+            <th>Date d'ouverture</th>
+        </tr>
+    {% for etablissement in etablissements %}
+        <tr class='etablissements' id='{{ etablissement.id }}'>
+            <td>{{ etablissement.id }}</td>
+            <td>{{ etablissement.nom }}</td>
+            <td>{{ etablissement.nature }}</td>
+            <td>{{ etablissement.secteur }}</td>
+            <td>{{ etablissement.latitude }}</td>
+            <td>{{ etablissement.longitude }}</td>
+            <td>{{ etablissement.adresse }}</td>
+            <td>{{ etablissement.commune }}</td>
+            <td>{{ etablissement.departement }}</td>
+            <td>{{ etablissement.region }}</td>
+            <td>{{ etablissement.academie }}</td>
+            <td>{{ etablissement.dateouverture|date('d-m-Y') }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    {% if lienPremier %}
+    <a href='{{ lienPremier }}'>Première page</a>
+    {% endif %}
+
+    {% if lienPrecedent %}
+    <a href='{{ lienPrecedent }}'>Page précédente</a>
+    {% endif %}
+    
+    {% if lienSuivant %}
+    <a href='{{ lienSuivant }}'>Page suivante</a>
+    {% endif %}
+
+{% endblock %}
